@@ -1,1 +1,16 @@
-[{"title":"A Book","imageUrl":"https://images-na.ssl-images-amazon.com/images/I/41fhsnzKEgL._SX258_BO1,204,203,200_.jpg","description":"NEW YORK TIMES BESTSELLER The stunning debut novel from one of the most creative artists of our generation, Bobby Hall, aka Logic.","price":"19.99"},{"title":"book","imageUrl":"https://m.media-amazon.com/images/I/81af+MCATTL.jpg","description":"dfgdgdf","price":"9.99"}]
+[
+    {
+        "id": "0.20520580758042728",
+        "title": "A Book1",
+        "imageUrl": "https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg",
+        "description": "This is an awesome book!123",
+        "price": "19.88"
+    },
+    {
+        "id": "0.8397195434240456",
+        "title": "Another Product",
+        "imageUrl": "https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg",
+        "description": "Another very amazing product!",
+        "price": "19.68"
+    }
+]
