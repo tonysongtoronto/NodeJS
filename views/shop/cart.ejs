@@ -8,8 +8,8 @@
             <div>
                 <ol>
                     <% for(let product of cart.products) { %>
-                        <li>
-                            <p><%= product.title %> (<%= product.quantity %>)</p>
+                        <li>   
+                            <p><%= product.title %> (<%= product.price %>*<%= product.quantity %>)</p>
                             <form action="/cart-delete-item" method="post">
                                 <button type="submit" class="btn">Delete</button>
                                 <input type="hidden" name="productId" value="<%= product.id %>">

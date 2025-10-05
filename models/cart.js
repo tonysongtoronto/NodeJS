@@ -53,7 +53,7 @@ module.exports = class Cart {
       }
       // Analyze the cart => Find existing product
       const existingProductIndex = cart.products.findIndex(
-        prod => prod.id === id
+        prod => prod.id == id
       );
       const existingProduct = cart.products[existingProductIndex];
       let updatedProduct;
@@ -67,7 +67,9 @@ module.exports = class Cart {
         updatedProduct = { id: id, qty: 1 };
         cart.products = [...cart.products, updatedProduct];
       }
-      cart.totalPrice = cart.totalPrice + +productPrice;
+      cart.totalPrice = cart.totalPrice + productPrice;
+
+     
       fs.writeFile(cartDataDir, JSON.stringify(cart), err => {
         console.log(err);
       });
@@ -77,18 +79,28 @@ module.exports = class Cart {
 
   static removeProduct(productId, productPrice, callback) {
     getCartFromFile(cart => {
+
+ 
       if (cart.products.length > 0) {
         let updatedProducts = [];
         let count = 0;
         for (let product of cart.products) {
           if (product.id === productId) {
-            count = product.quantity;
+            count = product.qty;
             continue;
           }
           updatedProducts.push(product);
         }
+
+    
+
+
         cart.products = updatedProducts;
         cart.totalPrice -= productPrice * count;
+        cart.totalPrice = parseFloat(cart.totalPrice.toFixed(2));
+
+
+
         fs.writeFile(cartDataDir, JSON.stringify(cart), err => {
           callback(err);
         });

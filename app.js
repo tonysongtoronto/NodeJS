@@ -5,9 +5,13 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const db = require('./util/database');
+
 const errorsController = require('./controllers/errors.js');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+
 
 app.set('view engine', 'ejs');
 
