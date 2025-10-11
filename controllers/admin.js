@@ -17,14 +17,17 @@ module.exports.postAddProduct = (req, res, next) => {
     const productImageUrl = req.body.imageUrl;
     const productDescription = req.body.description;
 
-    const product = new Product(
-        productTitle,
-        productPrice,
-        productImageUrl,
-        productDescription,
-        null,
-        req.user._id
-    );
+
+      const userId = req.user._id;
+
+    const product = new Product({
+        title: productTitle,
+        price: productPrice,
+        imageUrl: productImageUrl,
+        description: productDescription,
+        userId: userId
+    });
+    
     
     product
         .save()
@@ -45,10 +48,6 @@ module.exports.getEditProduct = (req, res, next) => {
     const productId = req.params.productId;
     Product.findById(productId).then((prod) => {
 
-            console.log("*****************");
-         console.log(prod);
-          console.log("*****************");
-    
             if (!prod) {
                 return res.redirect('/');
             }
@@ -73,13 +72,17 @@ module.exports.postEditProduct = (req, res, next) => {
     const productPrice = req.body.price;
     const productImageUrl = req.body.imageUrl;
     const productDescription = req.body.description;
-    const productUserId = req.body.userId;
+    // const productUserId = req.body.userId;
 
-  const product = new Product(productTitle,
-     productPrice, productImageUrl,
-      productDescription, productId,productUserId);
-    product
-        .save()
+  Product
+        .findById(productId)
+        .then(product => {
+            product.title = productTitle;
+            product.price = productPrice;
+            product.imageUrl = productImageUrl;
+            product.description = productDescription;
+            return product.save();
+        })
         .then(result => {
             res.redirect('/admin/products');
         })
@@ -89,8 +92,9 @@ module.exports.postEditProduct = (req, res, next) => {
 
 
 module.exports.getProducts = (req, res, next) => {
+
     Product
-        .fetchAll()
+        .find()
         .then(products => {
             res.render('admin/product-list', {
                 pageTitle: 'All Products',
@@ -102,11 +106,11 @@ module.exports.getProducts = (req, res, next) => {
 };
 
 
-
 module.exports.postDeleteProduct = (req, res, next) => {
     const productId = req.body.productId;
-    Product
-        .deleteById(productId)
+        Product
+        // .findByIdAndRemove(productId) // deprecated without setting 'useFindAndModify: false'
+        .findByIdAndDelete(productId)
         .then(result => {
             res.redirect('/admin/products');
         })
